@@ -12,7 +12,7 @@ use diesel::{
 #[allow(non_camel_case_types)]
 pub(crate) struct table;
 
-pub(crate) type SqlType = (Int4, Nullable<Bpchar>);
+pub(crate) type SqlType = (Int4);
 impl QuerySource for table {
     type FromClause = Identifier<'static>;
     type DefaultSelection = <Self as Table>::AllColumns;
@@ -32,7 +32,7 @@ impl AsQuery for table {
 }
 impl Table for table {
     type PrimaryKey = id;
-    type AllColumns = (id, checksum);
+    type AllColumns = (id);
     fn primary_key(&self) -> Self::PrimaryKey {
         todo!()
     }
@@ -96,26 +96,3 @@ where
         todo!()
     }
 }
-#[allow(non_camel_case_types)]
-pub(crate) struct checksum;
-
-impl diesel::expression::Expression for checksum {
-    type SqlType = Nullable<Bpchar>;
-}
-impl<DB> diesel::query_builder::QueryFragment<DB> for checksum
-where
-    DB: diesel::backend::Backend,
-    <table as QuerySource>::FromClause: QueryFragment<DB>,
-{
-    fn walk_ast(
-        &self,
-        _out: diesel::query_builder::AstPass<DB>,
-    ) -> diesel::result::QueryResult<()> {
-        todo!()
-    }
-}
-impl SelectableExpression<table> for checksum {}
-
-impl<QS> AppearsOnTable<QS> for checksum where QS: AppearsInFromClause<table, Count = Once> {}
-
-impl diesel::expression::NonAggregate for checksum {}

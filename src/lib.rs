@@ -24,9 +24,9 @@ impl<'ident> Identifiable for &'ident Version {
 
 impl<__DB: diesel::backend::Backend, __ST> Queryable<__ST, __DB> for Version
 where
-    (i32, Option<String>): Queryable<__ST, __DB>,
+    (i32): Queryable<__ST, __DB>,
 {
-    type Row = <(i32, Option<String>) as Queryable<__ST, __DB>>::Row;
+    type Row = <(i32) as Queryable<__ST, __DB>>::Row;
     fn build(_row: Self::Row) -> Self {
         todo!()
     }
